@@ -1,0 +1,34 @@
+class Solution:
+	# @param A : list of integers
+	# @param B : integer
+	# @return an integer
+
+    def isAlocated(self,A,pages,B):
+        cnt=0
+        page_allocated=0
+        for i in range(len(A)):
+            if ((page_allocated+A[i])>pages):
+                cnt+=1
+                page_allocated=A[i]
+                if page_allocated > pages:
+                    return False
+            else:
+                page_allocated+=A[i]
+        if cnt < B: return True
+        return False
+	def books(self, A, B):
+        if len(A)<B:
+            return -1
+        low=min(A)
+        high=sum(A)
+        while low<=high:
+            mid=(low+high)//2
+            if self.isAlocated(A,mid,B):
+                high=mid-1
+            else:
+                low=mid+1
+        return low
+
+
+TC: O(NlogN) -> logn due to Binary search and N for to check for IsAlocated which in worse can go upto N
+C: O(1) 
